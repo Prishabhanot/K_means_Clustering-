@@ -54,3 +54,15 @@ def get_labels(data, centroids):
 
 labels = get_labels(data, centroids)
 print(labels)
+
+#How many players in each cluster (each unique value occurs in cluster)
+labels.value_counts()
+
+#Updating Centroids based on which players in cluster
+
+#Takes natural log of each data point, then finds mean of all values in row, then does e^(mean value)
+#This gives the geometric mean
+data.groupby(labels).apply(lambda x: np.exp(np.log(x).mean()))
+
+
+
