@@ -37,10 +37,13 @@ print("\nFirst 5 Rows of Data:\n", data.head())
 def random_centroids(data,k):
     centroids=[]
     for i in range(k):
-        centroid = data.apply(lambda x: float(x.sample()))
-        '''This randomly samples a single value from each column, turn it into a float'''
+        centroid = data.apply(lambda x: float(x.sample().iloc[0]))
+        '''This randomly samples a single value from each column, turn it into a float, 
+        iloc[0] is simply used to extract the first element from the sampled Series'''
         centroids.append(centroid)
     return pd.concat(centroids,axis=1)
+
+
 
 centroids = random_centroids(data,5)
 
