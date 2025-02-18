@@ -102,9 +102,9 @@ players[labels==0][["short_name"]+ features]
 #K means helps us find patterns 
 
 #Comparing to implementation thats in sklearn 
-from sklearn.cluster import KMeans 
+'''from sklearn.cluster import KMeans 
 kmeans = KMeans(3)
 kmeans.fit(data)
 KMeans(n_cluster=5)
 centroids=kmeans.cluster_centers_
-pd.DataFrame(centroids, columns=features).T
+pd.DataFrame(centroids, columns=features).T'''
