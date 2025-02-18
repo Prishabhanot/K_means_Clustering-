@@ -80,7 +80,7 @@ def plot_clusters(data, labels, centroids, iteration):
     plt.show()
 
 max_iterations =100 #number of times algorithm will iterate 
-k = 3 #number of clusters 
+k = 5 #number of clusters 
 centroids = random_centroids(data,k)
 old_centroids = pd.DataFrame()
 iteration = 1
@@ -91,3 +91,20 @@ while iteration < max_iterations and not centroids.equals(old_centroids):
     centroids = new_centroids(data, labels,k)
     plot_clusters(data, labels, centroids, iteration)
     iteration +=1
+
+#What each represent
+print(centroids)
+
+#Which players its referring to (star players)
+players[labels==0][["short_name"]+ features]
+#Label 1 is younger players
+#Label 2 is older players 
+#K means helps us find patterns 
+
+#Comparing to implementation thats in sklearn 
+from sklearn.cluster import KMeans 
+kmeans = KMeans(3)
+kmeans.fit(data)
+KMeans(n_cluster=5)
+centroids=kmeans.cluster_centers_
+pd.DataFrame(centroids, columns=features).T
