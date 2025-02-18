@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+from sklearn.decomposition import PCA
+import matplotlib.pyplot as plt
 
 '''Load the dataset with low_memory=False, this helps pandas read large CSV files 
 more efficiently, and can resolve issues like mixed data types.'''
@@ -66,37 +68,34 @@ def new_centroids(data, labels, k):
 #.T switches rows and columns 
 
 # Visualization 
-# PCA stands for principle components analysis (will turn the 5 dimensional data currently have into 2 dimensional)
-from sklearn.decomposition import PCA
-import matplotlib.pyplot as plt 
-
+# PCA stands for principal components analysis (will turn the 5 dimensional data currently have into 2 dimensional)
 def plot_clusters(data, labels, centroids, iteration):
     pca = PCA(n_components=2)
     data_2d = pca.fit_transform(data)
     centroids_2d = pca.transform(centroids.T)
     plt.title(f'Iteration {iteration}')
-    plt.scatter(x=data_2d[:,0], y=data_2d[:,1], c=labels)
-    plt.scatter(x=centroids_2d[:,0], y=centroids_2d[:,1])
+    plt.scatter(data_2d[:, 0], data_2d[:, 1], c=labels, cmap='viridis')
+    plt.scatter(centroids_2d[:, 0], centroids_2d[:, 1], marker='x', color='red')
     plt.show()
 
-max_iterations =100 #number of times algorithm will iterate 
+max_iterations = 100 #number of times algorithm will iterate 
 k = 5 #number of clusters 
-centroids = random_centroids(data,k)
+centroids = random_centroids(data, k)
 old_centroids = pd.DataFrame()
 iteration = 1
 
 while iteration < max_iterations and not centroids.equals(old_centroids):
     old_centroids = centroids 
-    labels = get_labels (data, centroids)
-    centroids = new_centroids(data, labels,k)
+    labels = get_labels(data, centroids)
+    centroids = new_centroids(data, labels, k)
     plot_clusters(data, labels, centroids, iteration)
-    iteration +=1
+    iteration += 1
 
-#What each represent
+# What each represent
 print(centroids)
 
-#Which players its referring to (star players)
-players[labels==0][["short_name"]+ features]
+# Which players its referring to (star players)
+print(players[labels==0][["short_name"] + features])
 #Label 1 is younger players
 #Label 2 is older players 
 #K means helps us find patterns 
