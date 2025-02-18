@@ -1,0 +1,33 @@
+import pandas as pd
+import numpy as np
+
+'''Load the dataset with low_memory=False, this helps pandas read large CSV files 
+more efficiently, and can resolve issues like mixed data types.'''
+
+players = pd.read_csv("players_22.csv", low_memory=False)
+
+# Features to cluster on 
+features = ["overall", "potential", "wage_eur", "value_eur", "age"]
+
+# Drops any rows where any columns are null or missing value 
+players = players.dropna(subset=features)
+
+# Copy the relevant features for clustering
+data = players[features].copy()
+
+# K-means Clustering Steps 
+'''1. Scale the data (make sure all values are in the range 1-10, so no one value dominates the clustering)
+   2. Initialize random centroids
+   3. Label each data point (based on the distance from centroid)
+   4. Update Centroids 
+   5. Repeat steps 3 and 4 until centroids stop changing
+'''
+
+# Scaling data (MinMax Scale)
+data = ((data - data.min()) / (data.max() - data.min())) * 9 + 1
+
+# Display basic statistics of the scaled data
+print("Data Description:\n", data.describe())
+
+# Display the first few rows of the scaled data
+print("\nFirst 5 Rows of Data:\n", data.head())
