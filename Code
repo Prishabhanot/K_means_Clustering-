@@ -32,19 +32,25 @@ print("Data Description:\n", data.describe())
 # Display the first few rows of the scaled data
 print("\nFirst 5 Rows of Data:\n", data.head())
 
-#Intilizing Random Centroids 
-
-def random_centroids(data,k):
-    centroids=[]
+# Initializing Random Centroids 
+def random_centroids(data, k):
+    centroids = []
     for i in range(k):
         centroid = data.apply(lambda x: float(x.sample().iloc[0]))
-        '''This randomly samples a single value from each column, turn it into a float, 
+        '''This randomly samples a single value from each column, turns it into a float,
         iloc[0] is simply used to extract the first element from the sampled Series'''
         centroids.append(centroid)
-    return pd.concat(centroids,axis=1)
+    return pd.concat(centroids, axis=1)
 
-
-
-centroids = random_centroids(data,5)
+centroids = random_centroids(data, 5)
 
 print(centroids)
+
+# Labelling each datapoint according to centroid distance
+def get_labels(data, centroids):
+    # Calculating distance
+    distances = centroids.apply(lambda x: np.sqrt(((data - x) ** 2).sum(axis=1)))
+    return distances.idxmin(axis=1)
+
+labels = get_labels(data, centroids)
+print(labels)
