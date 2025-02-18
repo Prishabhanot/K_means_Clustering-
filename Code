@@ -31,3 +31,17 @@ print("Data Description:\n", data.describe())
 
 # Display the first few rows of the scaled data
 print("\nFirst 5 Rows of Data:\n", data.head())
+
+#Intilizing Random Centroids 
+
+def random_centroids(data,k):
+    centroids=[]
+    for i in range(k):
+        centroid = data.apply(lambda x: float(x.sample()))
+        '''This randomly samples a single value from each column, turn it into a float'''
+        centroids.append(centroid)
+    return pd.concat(centroids,axis=1)
+
+centroids = random_centroids(data,5)
+
+print(centroids)
